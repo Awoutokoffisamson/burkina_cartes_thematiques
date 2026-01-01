@@ -1,0 +1,11 @@
+# Fichiers temporaires R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Scripts de debug
+debug_*.R
