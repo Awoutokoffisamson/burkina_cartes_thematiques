@@ -1,16 +1,6 @@
 ################################################################################
 # SCRIPT 04: FUSION POPULATION ET SUPERFICIE
-#
-# Ce script fusionne les données de population (scrappées de CityPopulation)
-# avec les superficies calculées à partir du shapefile.
-#
-# Entrées:
-# - data/processed/BFA_subdivision_2025/BFA_niveau3_communes_2025.shp
-# - data/raw/population_citypop.csv
-# - data/raw/table_correspondance_communes.csv
-#
-# Sorties:
-# - outputs/rapports/BFA_communes_population_superficie_2025.xlsx
+
 ################################################################################
 
 # 1. Chargement des bibliothèques
@@ -27,12 +17,8 @@ if (basename(getwd()) == "scripts") {
     setwd("..")
 }
 
-cat("================================================================================\n")
-cat("FUSION DES DONNÉES POPULATION ET SUPERFICIE\n")
-cat("================================================================================\n\n")
 
 # 2. Chargement des données
-cat("Chargement des fichiers...\n")
 
 # Shapefile (Nouvelle subdivision)
 shp_file <- "data/processed/BFA_subdivision_2025/BFA_niveau3_communes_2025.shp"
@@ -137,7 +123,6 @@ if (nrow(missing_link) > 0) {
     print(missing_link$commune_clean)
 }
 
-cat("Fusion 2 : Shapefile + Population (via Nouvelle Province)...\n")
 # Maintenant on peut joindre avec le shapefile via "Nouvelle Province" + "Commune"
 merged_data <- communes_shp %>%
     st_drop_geometry() %>%
@@ -153,21 +138,10 @@ merged_data <- communes_shp %>%
     ) %>%
     arrange(Region, Province, Commune)
 
-# 6. Vérification finale
-missing_pop <- merged_data %>% filter(is.na(Population_2019))
-if (nrow(missing_pop) > 0) {
-    cat(paste("\n⚠️ ATTENTION :", nrow(missing_pop), "communes n'ont toujours pas de population.\n"))
-    print(missing_pop$Commune)
-} else {
-    cat("\n✅ SUCCÈS : Toutes les communes ont une population associée !\n")
-}
-
-# 7. Calcul de la densité
+# 6. Calcul de la densité
 merged_data <- merged_data %>%
     mutate(Densite_2019 = round(Population_2019 / Superficie_km2, 1))
 
-# 8. Export Excel
+# 7. Export Excel
 output_file <- "outputs/rapports/BFA_communes_population_superficie_2025.xlsx"
 write_xlsx(merged_data, output_file)
-
-cat(paste("\n✅ Fichier Excel final généré :\n   ", output_file, "\n"))
