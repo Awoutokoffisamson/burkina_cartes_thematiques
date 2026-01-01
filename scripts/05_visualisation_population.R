@@ -1,17 +1,6 @@
 ################################################################################
 # SCRIPT 05: VISUALISATION POPULATION ET DENSITÉ
-#
-# Ce script génère deux cartes spécifiques demandées :
-# 1. Carte des 17 Régions avec étiquettes (Nom + Population)
-# 2. Carte des Provinces avec densité de population par intervalles (Contraste)
-#
-# Entrées:
-# - data/processed/BFA_subdivision_2025/BFA_niveau3_communes_2025.shp
-# - outputs/rapports/BFA_communes_population_superficie_2025.xlsx
-#
-# Sorties:
-# - outputs/cartes/BFA_Regions_Population_2019.png
-# - outputs/cartes/BFA_Provinces_Densite_2019.png
+
 ################################################################################
 
 # 1. Chargement des bibliothèques
@@ -31,9 +20,6 @@ if (basename(getwd()) == "scripts") {
     setwd("..")
 }
 
-cat("================================================================================\n")
-cat("GÉNÉRATION DES CARTES DE POPULATION ET DENSITÉ\n")
-cat("================================================================================\n\n")
 
 # 2. Chargement des données
 shp_file <- "data/processed/BFA_subdivision_2025/BFA_niveau3_communes_2025.shp"
@@ -81,10 +67,10 @@ communes_full <- communes_shp %>%
 # Vérification des ratés
 missing <- communes_full %>% filter(is.na(Population_2019))
 if (nrow(missing) > 0) {
-    cat("⚠️ ATTENTION :", nrow(missing), "communes n'ont pas matché (Géométrie sans Data) !\n")
+    cat(" ATTENTION :", nrow(missing), "communes n'ont pas matché (Géométrie sans Data) !\n")
     print(missing$NAME_3)
 } else {
-    cat("✅ Jointure parfaite (Toutes les géométries ont des données).\n")
+    cat("Jointure parfaite (Toutes les géométries ont des données).\n")
 }
 
 # Gestion des colonnes dupliquées (Superficie_km2.x vs .y)
@@ -150,12 +136,10 @@ p1 <- ggplot(data = regions_agg) +
     )
 
 ggsave("outputs/cartes/BFA_Regions_Population_2019.png", plot = p1, width = 12, height = 10, bg = "white")
-cat("✅ Carte enregistrée : outputs/cartes/BFA_Regions_Population_2019.png\n")
 
 # ==============================================================================
 # CARTE 2 : PROVINCES (DENSITÉ)
 # ==============================================================================
-cat("\nCréation de la carte des Provinces (Densité)...\n")
 
 # Agrégation par Province (On utilise nvll_pr du Shapefile)
 provinces_agg <- communes_full %>%
@@ -222,4 +206,3 @@ p2 <- ggplot(data = provinces_agg) +
     )
 
 ggsave("outputs/cartes/BFA_Provinces_Densite_2019.png", plot = p2, width = 12, height = 10, bg = "white")
-cat("✅ Carte enregistrée : outputs/cartes/BFA_Provinces_Densite_2019.png\n")
