@@ -1,13 +1,6 @@
 ################################################################################
 # SCRIPT 02: VISUALISATION DES CARTES
-#
 # Ce script génère les cartes de la nouvelle subdivision administrative.
-#
-# Entrées:
-# - data/processed/BFA_subdivision_2025/ : Shapefiles générés par le script 01
-#
-# Sorties:
-# - outputs/cartes/ : Cartes au format PNG
 ################################################################################
 
 # 1. Chargement des bibliothèques
@@ -54,7 +47,6 @@ theme_carte <- function() {
 # ==============================================================================
 # CARTE 1: RÉGIONALE
 # ==============================================================================
-cat("📍 Génération de la carte Régionale...\n")
 
 p1 <- ggplot() +
     geom_sf(data = regions_new, aes(fill = nvll_rg), color = "white", size = 1.2) +
@@ -76,7 +68,6 @@ ggsave(file.path(output_dir, "1_Carte_Regionale_2025.png"),
 # ==============================================================================
 # CARTE 2: PROVINCIALE
 # ==============================================================================
-cat("📍 Génération de la carte Provinciale...\n")
 
 p2 <- ggplot() +
     geom_sf(
@@ -102,7 +93,6 @@ ggsave(file.path(output_dir, "2_Carte_Provinciale_2025.png"),
 # ==============================================================================
 # CARTE 3: PROVINCIALE (ÉTIQUETTES OPTIMISÉES)
 # ==============================================================================
-cat("📍 Génération de la carte Provinciale avec étiquettes optimisées...\n")
 
 centroides_provinces <- st_centroid(provinces_new)
 
@@ -138,7 +128,6 @@ ggsave(file.path(output_dir, "3_Carte_Provinciale_Etiquettes_2025.png"),
 # ==============================================================================
 # CARTE 4: HIÉRARCHIE (PROVINCES DANS RÉGIONS)
 # ==============================================================================
-cat("📍 Génération de la carte Hiérarchie...\n")
 
 p4 <- ggplot() +
     # Fond : Régions colorées
@@ -180,7 +169,6 @@ ggsave(file.path(output_dir, "4_Carte_Hierarchie_Regions_Provinces.png"),
 # ==============================================================================
 # CARTE 5: COMMUNALE
 # ==============================================================================
-cat("📍 Génération de la carte Communale...\n")
 
 p5 <- ggplot() +
     geom_sf(
@@ -203,6 +191,3 @@ ggsave(file.path(output_dir, "5_Carte_Communale_2025.png"),
     plot = p5, width = 18, height = 15, dpi = 300
 )
 
-cat("\n================================================================================\n")
-cat("✓ CARTES GÉNÉRÉES AVEC SUCCÈS DANS 'outputs/cartes'\n")
-cat("================================================================================\n")
