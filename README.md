@@ -43,3 +43,10 @@ source("scripts/05_visualisation_population.R")
 
 ## Auteur
 AWOUTO K. Samson - Élève Ingénieur Statisticien Économiste, ENSAE Dakar
+
+## 🛡️ Droits d'Utilisation
+Les cartes produites peuvent être utilisées librement dans des rapports académiques ou de recherche, à condition de citer la source. Toute utilisation commerciale est interdite (Licence CC BY-NC-SA 4.0).
+
+## 📜 Citation
+> AWOUTO, K. S. (2026). *Cartes Thématiques Burkina Faso 2025*. ENSAE Dakar. https://github.com/Awoutokoffisamson/burkina_cartes_thematiques
+

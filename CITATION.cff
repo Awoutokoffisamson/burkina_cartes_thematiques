@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Si vous utilisez ces cartes, veuillez les citer comme suit."
+authors:
+  - family-names: "AWOUTO"
+    given-names: "K. Samson"
+    affiliation: "ENSAE Dakar"
+title: "Cartes Thématiques Burkina Faso 2025"
+version: 1.0.0
+date-released: 2026-01-01
+url: "https://github.com/Awoutokoffisamson/burkina_cartes_thematiques"
